@@ -25,6 +25,8 @@ qt_add_qml_module(appFile_explorer
         img/txt_file.png
         img/folder.png
         img/open_folder.png
+        SOURCES filesystemmanager.h filesystemmanager.cpp
+        SOURCES filesystemitem.h filesystemitem.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

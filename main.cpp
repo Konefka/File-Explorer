@@ -3,23 +3,23 @@
 #include <QStringList>
 #include <QString>
 #include <filesystem>
+#include <iostream>
+
+#include "filesystemmanager.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-    filesystem::path currentPath = R"(C:\)";
-    QStringList folders;
-    QStringList files;
+    FileSystemManager fileSystemManager;
+    QString currentDir = QString::fromStdString(fileSystemManager.GetCurrentPath().string());
 
-    if (filesystem::exists(currentPath) && filesystem::is_directory(currentPath)) {
-        for (const auto& entry : filesystem::directory_iterator(currentPath)) {
-            if (entry.is_directory())
-                folders.append(QString::fromStdString(entry.path().filename().string()));
-            else if (entry.is_regular_file()) {
-                files.append(QString::fromStdString(entry.path().filename().string()));
-            }
-        }
+    fileSystemManager.LoadDirectory();
+    const auto& items = fileSystemManager.GetItems();
+
+    for (const auto& item : items)
+    {
+        cout << item.GetPath() << endl;
     }
 
     QGuiApplication app(argc, argv);
@@ -32,10 +32,9 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
 
-    QString currentDir = QString::fromStdString(currentPath.string());
     engine.setInitialProperties({
-        {"folders", folders},
-        {"files", files},
+        // {"folders", folders},
+        // {"files", files},
         {"currentDir", currentDir},
     });
 
