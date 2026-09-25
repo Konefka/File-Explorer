@@ -7,13 +7,13 @@ class FileSystemItem
 {
 private:
     std::filesystem::path path;
-    bool isDirectory;
+    bool isDirectory; // a variable that says if it's a directory
 
 public:
-    FileSystemItem(std::filesystem::path itemPath, bool itemIsDirectory);
+    FileSystemItem(std::filesystem::path itemPath, bool isItemDirectory);
 
     std::filesystem::path GetPath() const;
-    bool IsDirectory() const;
+    bool IsDirectory() const; // a method that returns isDirectory
 };
 
 #endif // FILESYSTEMITEM_H

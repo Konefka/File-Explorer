@@ -1,9 +1,7 @@
 #include "filesystemmodel.h"
 
-FileSystemModel::FileSystemModel(FileSystemManager* manager, QObject* parent) : QAbstractListModel(parent), manager(manager)
-{
-
-}
+FileSystemModel::FileSystemModel(FileSystemManager* manager, QObject* parent)
+    : QAbstractListModel(parent), manager(manager){}
 
 int FileSystemModel::rowCount(const QModelIndex& parent) const
 {
@@ -15,8 +13,7 @@ int FileSystemModel::rowCount(const QModelIndex& parent) const
 
 QVariant FileSystemModel::data(const QModelIndex& index, int role) const
 {
-    if (!index.isValid() || index.row() < 0 ||
-        index.row() >= static_cast<int>(manager->GetItems().size()))
+    if (!index.isValid() || index.row() < 0 || index.row() >= static_cast<int>(manager->GetItems().size()))
     {
         return {};
     }
@@ -46,4 +43,22 @@ QHash<int, QByteArray> FileSystemModel::roleNames() const
         { IsDirectoryRole, "isDirectory" },
         { PathRole, "path" }
     };
+}
+
+void FileSystemModel::ChangePath(const QString& path)
+{
+    manager->ChangePath(
+        std::filesystem::path(path.toStdString())
+    );
+
+    Refresh();
+}
+
+void FileSystemModel::Refresh()
+{
+    beginResetModel();
+
+    manager->LoadDirectory();
+
+    endResetModel();
 }

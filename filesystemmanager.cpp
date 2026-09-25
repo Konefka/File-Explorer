@@ -1,4 +1,5 @@
 #include "filesystemmanager.h"
+#include <algorithm>
 
 FileSystemManager::FileSystemManager()
 {
@@ -29,6 +30,17 @@ void FileSystemManager::LoadDirectory()
         FileSystemItem item(entry.path(), entry.is_directory());
         items.push_back(item);
     }
+
+    std::sort(items.begin(), items.end(),
+    [](const FileSystemItem& a, const FileSystemItem& b)
+    {
+        if (a.IsDirectory() != b.IsDirectory())
+        {
+            return a.IsDirectory() > b.IsDirectory();
+        }
+
+        return a.GetPath().filename().string() < b.GetPath().filename().string();
+    });
 }
 
 const std::vector<FileSystemItem>& FileSystemManager::GetItems() const

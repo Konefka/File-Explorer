@@ -16,26 +16,6 @@ ApplicationWindow {
     // property color light: "#e0e0e0"
 
     required property string currentDir
-    // required property var folders
-    // required property var files
-
-    // property var items: []
-
-    // Component.onCompleted: {
-    //     items = folders.map((name) => {
-    //         return {
-    //             name: name,
-    //             isFolder: true
-    //         }
-    //     }).concat(
-    //         files.map((name) => {
-    //             return {
-    //                 name: name,
-    //                 isFolder: false
-    //             }
-    //         })
-    //     )
-    // }
 
     Rectangle {
         id: currentDirBox
@@ -58,6 +38,10 @@ ApplicationWindow {
             placeholderText: "Input dir string..."
             text: currentDir
             font.pixelSize: 18
+
+            onAccepted: {
+                new fileSystemModel.ChangePath(text)
+            }
         }
     }
 

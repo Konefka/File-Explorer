@@ -17,8 +17,8 @@ public:
 
     void ChangePath(const std::filesystem::path& newPath);
     std::filesystem::path GetCurrentPath() const;
-    void LoadDirectory();
 
+    void LoadDirectory();
     const std::vector<FileSystemItem>& GetItems() const;
 };
 

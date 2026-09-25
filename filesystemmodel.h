@@ -23,13 +23,15 @@ public:
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
     QHash<int, QByteArray> roleNames() const override;
-
     enum Roles
     {
         NameRole = Qt::UserRole + 1,
         IsDirectoryRole,
         PathRole
     };
+
+    Q_INVOKABLE void ChangePath(const QString& path);
+    void Refresh();
 };
 
 #endif // FILESYSTEMMODEL_H

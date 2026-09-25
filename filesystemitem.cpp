@@ -1,9 +1,9 @@
 #include "filesystemitem.h"
 
-FileSystemItem::FileSystemItem(std::filesystem::path itemPath, bool itemIsDirectory)
+FileSystemItem::FileSystemItem(std::filesystem::path itemPath, bool isItemDirectory)
 {
     path = itemPath;
-    isDirectory = itemIsDirectory;
+    isDirectory = isItemDirectory;
 }
 
 std::filesystem::path FileSystemItem::GetPath() const
