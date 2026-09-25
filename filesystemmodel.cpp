@@ -3,6 +3,34 @@
 FileSystemModel::FileSystemModel(FileSystemManager* manager, QObject* parent)
     : QAbstractListModel(parent), manager(manager){}
 
+
+QHash<int, QByteArray> FileSystemModel::roleNames() const
+{
+    return {
+        { NameRole, "name" },
+        { IsDirectoryRole, "isDirectory" },
+        { PathRole, "path" }
+    };
+}
+
+void FileSystemModel::changePath(const QString& path)
+{
+    manager->ChangePath(
+        std::filesystem::path(path.toStdString())
+        );
+
+    Refresh();
+
+    emit currentPathChanged();
+}
+
+QString FileSystemModel::currentPath() const
+{
+    return QString::fromStdString(
+        manager->GetCurrentPath().string()
+        );
+}
+
 int FileSystemModel::rowCount(const QModelIndex& parent) const
 {
     if(parent.isValid())
@@ -36,24 +64,6 @@ QVariant FileSystemModel::data(const QModelIndex& index, int role) const
     }
 }
 
-QHash<int, QByteArray> FileSystemModel::roleNames() const
-{
-    return {
-        { NameRole, "name" },
-        { IsDirectoryRole, "isDirectory" },
-        { PathRole, "path" }
-    };
-}
-
-void FileSystemModel::ChangePath(const QString& path)
-{
-    manager->ChangePath(
-        std::filesystem::path(path.toStdString())
-    );
-
-    Refresh();
-}
-
 void FileSystemModel::Refresh()
 {
     beginResetModel();
@@ -61,4 +71,11 @@ void FileSystemModel::Refresh()
     manager->LoadDirectory();
 
     endResetModel();
+}
+
+void FileSystemModel::openItem(const QString& path)
+{
+    QDesktopServices::openUrl(
+        QUrl::fromLocalFile(path)
+    );
 }

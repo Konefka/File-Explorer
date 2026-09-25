@@ -2,7 +2,6 @@
 #include <QQmlApplicationEngine>
 #include <QStringList>
 #include <QString>
-#include <filesystem>
 #include <QQmlContext>
 
 #include "filesystemmanager.h"
@@ -20,8 +19,6 @@ int main(int argc, char *argv[])
 
     FileSystemModel fileSystemModel(&fileSystemManager);
 
-    QString currentDir = QString::fromStdString(fileSystemManager.GetCurrentPath().string());
-
     engine.rootContext()->setContextProperty("fileSystemModel", &fileSystemModel);
 
     QObject::connect(
@@ -31,10 +28,6 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection
         );
-
-    engine.setInitialProperties({
-        {"currentDir", currentDir}
-    });
 
     engine.loadFromModule("File_explorer", "Main");
 

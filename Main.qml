@@ -15,8 +15,6 @@ ApplicationWindow {
     // property color reallyLight: "#e7e7e7"
     // property color light: "#e0e0e0"
 
-    required property string currentDir
-
     Rectangle {
         id: currentDirBox
         width: parent.width
@@ -35,12 +33,14 @@ ApplicationWindow {
             bottomPadding: 2
 
             verticalAlignment: Text.AlignVCenter
-            placeholderText: "Input dir string..."
-            text: currentDir
+            placeholderText: "Where do you wanna go?"
+            text: fileSystemModel
+                  ? fileSystemModel.currentPath
+                  : ""
             font.pixelSize: 18
 
             onAccepted: {
-                new fileSystemModel.ChangePath(text)
+                fileSystemModel.changePath(text)
             }
         }
     }
@@ -100,7 +100,11 @@ ApplicationWindow {
                 }
             }
             onClicked: {
-                console.log("Kliknięto", name)
+                if (isDirectory) {
+                    fileSystemModel.changePath(path);
+                } else {
+                    fileSystemModel.openItem(path);
+                }
             }
         }
     }
