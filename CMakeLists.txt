@@ -22,9 +22,13 @@ qt_add_qml_module(appFile_explorer
         Main.qml
 
     RESOURCES
-        img/txt_file.png
-        img/folder.png
-        img/open_folder.png
+        img/file.svg
+        img/txt_file.svg
+        img/folder.svg
+        img/icon.png
+        img/minimize.svg
+        img/maximize.svg
+        img/close.svg
         SOURCES filesystemmanager.h filesystemmanager.cpp
         SOURCES filesystemitem.h filesystemitem.cpp
         SOURCES filesystemmodel.h filesystemmodel.cpp
