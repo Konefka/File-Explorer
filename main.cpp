@@ -3,39 +3,37 @@
 #include <QStringList>
 #include <QString>
 #include <filesystem>
-#include <iostream>
+#include <QQmlContext>
 
 #include "filesystemmanager.h"
+#include "filesystemmodel.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-    FileSystemManager fileSystemManager;
-    QString currentDir = QString::fromStdString(fileSystemManager.GetCurrentPath().string());
-
-    fileSystemManager.LoadDirectory();
-    const auto& items = fileSystemManager.GetItems();
-
-    for (const auto& item : items)
-    {
-        cout << item.GetPath() << endl;
-    }
-
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
+
+    FileSystemManager fileSystemManager;
+    fileSystemManager.LoadDirectory();
+
+    FileSystemModel fileSystemModel(&fileSystemManager);
+
+    QString currentDir = QString::fromStdString(fileSystemManager.GetCurrentPath().string());
+
+    engine.rootContext()->setContextProperty("fileSystemModel", &fileSystemModel);
 
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,
         &app,
         []() { QCoreApplication::exit(-1); },
-        Qt::QueuedConnection);
+        Qt::QueuedConnection
+        );
 
     engine.setInitialProperties({
-        // {"folders", folders},
-        // {"files", files},
-        {"currentDir", currentDir},
+        {"currentDir", currentDir}
     });
 
     engine.loadFromModule("File_explorer", "Main");

@@ -18,7 +18,8 @@ std::filesystem::path FileSystemManager::GetCurrentPath() const
     return currentPath;
 }
 
-void FileSystemManager::LoadDirectory() {
+void FileSystemManager::LoadDirectory()
+{
     items.clear();
 
     if (!std::filesystem::exists(currentPath)) return;
@@ -27,7 +28,6 @@ void FileSystemManager::LoadDirectory() {
     {
         FileSystemItem item(entry.path(), entry.is_directory());
         items.push_back(item);
-
     }
 }
 

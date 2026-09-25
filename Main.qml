@@ -73,51 +73,51 @@ ApplicationWindow {
 
         clip: true
 
-    //     model: items
-    //     spacing: 2
+        model: fileSystemModel
+        spacing: 2
 
-    //     delegate: Button {
-    //         width: 200
-    //         height: 28
+        delegate: Button {
+            width: 200
+            height: 28
 
-    //         clip: true
+            clip: true
 
-    //         Row {
-    //             anchors {
-    //                 left: parent.left
-    //                 right: parent.right
-    //                 verticalCenter: parent.verticalCenter
-    //             }
+            Row {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    verticalCenter: parent.verticalCenter
+                }
 
-    //             spacing: 2
+                spacing: 2
 
-    //             Image {
-    //                 id: dirImg
-    //                 width: 36
-    //                 height: 36
+                Image {
+                    id: dirImg
+                    width: 36
+                    height: 36
 
-    //                 source: modelData.isFolder
-    //                     ? "img/folder.png"
-    //                     : "img/txt_file.png"
+                    source: isDirectory
+                        ? "img/folder.png"
+                        : "img/txt_file.png"
 
-    //                 anchors.verticalCenter: parent.verticalCenter
-    //             }
+                    anchors.verticalCenter: parent.verticalCenter
+                }
 
-    //             Text {
-    //                 width: parent.width - dirImg.width
-    //                 height: parent.height
+                Text {
+                    width: parent.width - dirImg.width
+                    height: parent.height
 
-    //                 text: modelData.name
-    //                 font.pixelSize: 12
+                    text: name
+                    font.pixelSize: 12
 
-    //                 verticalAlignment: Text.AlignVCenter
-    //                 elide: Text.ElideRight
-    //                 maximumLineCount: 1
-    //             }
-    //         }
-    //         onClicked: {
-    //             console.log("Kliknięto", modelData.name)
-    //         }
-    //     }
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                    maximumLineCount: 1
+                }
+            }
+            onClicked: {
+                console.log("Kliknięto", name)
+            }
+        }
     }
 }

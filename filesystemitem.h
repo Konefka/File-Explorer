@@ -13,6 +13,7 @@ public:
     FileSystemItem(std::filesystem::path itemPath, bool itemIsDirectory);
 
     std::filesystem::path GetPath() const;
+    bool IsDirectory() const;
 };
 
 #endif // FILESYSTEMITEM_H

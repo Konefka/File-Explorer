@@ -10,3 +10,7 @@ std::filesystem::path FileSystemItem::GetPath() const
 {
     return path;
 }
+
+bool FileSystemItem::IsDirectory() const {
+    return isDirectory;
+}
