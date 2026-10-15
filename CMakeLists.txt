@@ -29,10 +29,21 @@ qt_add_qml_module(appFile_explorer
         img/minimize.svg
         img/maximize.svg
         img/close.svg
-        SOURCES filesystemmanager.h filesystemmanager.cpp
-        SOURCES filesystemitem.h filesystemitem.cpp
-        SOURCES filesystemmodel.h filesystemmodel.cpp
+    SOURCES
+        filesystemmanager.h
+        filesystemmanager.cpp
+        filesystemitem.h
+        filesystemitem.cpp
+        filesystemmodel.h
+        filesystemmodel.cpp
 )
+
+if (WIN32)
+    target_sources(appFile_explorer PRIVATE
+        platform/windows/WindowsWindow.cpp
+        platform/windows/WindowsWindow.h
+    )
+endif()
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

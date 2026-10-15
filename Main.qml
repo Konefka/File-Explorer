@@ -98,7 +98,6 @@ ApplicationWindow {
 
                     MouseArea {
                         id: minimizeMouse
-
                         anchors.fill: parent
                         hoverEnabled: true
 
@@ -122,7 +121,6 @@ ApplicationWindow {
 
                     MouseArea {
                         id: maximizeMouse
-
                         anchors.fill: parent
                         hoverEnabled: true
 
@@ -151,11 +149,10 @@ ApplicationWindow {
 
                     MouseArea {
                         id: closeMouse
-
                         anchors.fill: parent
                         hoverEnabled: true
 
-                        onClicked: Qt.quit()
+                        onClicked: window.close();
                     }
                 }
             }

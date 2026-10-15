@@ -3,9 +3,14 @@
 #include <QStringList>
 #include <QString>
 #include <QQmlContext>
+#include <QWindow>
 
 #include "filesystemmanager.h"
 #include "filesystemmodel.h"
+
+#ifdef Q_OS_WINDOWS
+#include "platform/windows/WindowsWindow.h"
+#endif
 
 using namespace std;
 
@@ -30,6 +35,16 @@ int main(int argc, char *argv[])
         );
 
     engine.loadFromModule("File_explorer", "Main");
+
+    #ifdef Q_OS_WINDOWS
+        QObject* rootObject = engine.rootObjects().first();
+
+        QWindow* window = qobject_cast<QWindow*>(rootObject);
+
+        WindowsWindow windowsWindow(window);
+
+        app.installNativeEventFilter(&windowsWindow);
+    #endif
 
     return QGuiApplication::exec();
 }
